@@ -1,0 +1,31 @@
+<div class="container">
+    <h4>Registrar Categoria</h4>
+    <hr>
+</div>
+<form (ngSubmit)="registrarCategoria(forma)" class="animated fadeIn fast" #forma="ngForm">
+    <div class="form-group col-md-12">
+        <div>
+            <input class="form-control" type="text" placeholder="Nombre del Categoria" id=" validationServer01" [ngClass]="{ 'is-invalid': !strNombre.valid && strNombre.touched}" name="strnombre" [(ngModel)]="categorias.strNombre" #strNombre="ngModel" required>
+            <div class="invalid-feedback">
+                El nombre es necesario.
+            </div>
+        </div>
+        <!-- <div>
+            <textarea name="comentarios" rows="10" cols="40" id=" validationServer02" [ngClass]="{ 'is-invalid': !strDescripcion.valid && strDescripcion.touched}" name="strDescripcion" [(ngModel)]="Categoria.strDescripcion" #strDescripcion="ngModel" required>Escribe aquí tus comentarios</textarea>
+            <div class="invalid-feedback">
+                La descripción es necesaria.
+            </div>
+        </div> -->
+
+
+        <div class="list-inline mt-3 text-right">
+            <div class="list-inline-item">
+                <div class="form-group row">
+                    <div class="mr-3">
+                        <button type="submit" class="btn btn-outline-info btn-sm btn-block" [disabled]="!forma.valid"><i class="fa fa-save mr-2 "></i>AGREGAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

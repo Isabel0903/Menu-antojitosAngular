@@ -1,0 +1,52 @@
+<div class="container">
+    <h4>Actualizar Platillo</h4>
+    <hr>
+</div>
+<form (ngSubmit)="actualizarAntojitos()" class="animated fadeIn fast" #forma="ngForm">
+    <div class="form-group col-md-12">
+        <div>
+            <input class="form-control" type="text" placeholder="Nombre del platillo" id=" validationServer01" [ngClass]="{ 'is-invalid': !strNombre.valid && strNombre.touched}" name="strNombre" [(ngModel)]="antojito.strNombre" #strNombre="ngModel" required>
+        </div>
+
+        <div>
+            <input class="form-control" type="text" placeholder="Descripcion" id=" validationServer02" [ngClass]="{ 'is-invalid': !strDescripcion.valid && strDescripcion.touched}" name="strDescripcion" [(ngModel)]="antojito.strDescripcion" #strDescripcion="ngModel"
+                required>
+
+        </div>
+        <div>
+            <input class="form-control" type="text" placeholder="Ingredientes" id=" validationServer03" [ngClass]="{ 'is-invalid': !strIngredientes.valid && strIngredientes.touched}" name="strIngredientes" [(ngModel)]="antojito.strIngredientes" #strIngredientes="ngModel"
+                required>
+
+        </div>
+        <div>
+            <input class="form-control" type="text" placeholder="Numero de Piezas" id=" validationServer04" [ngClass]="{ 'is-invalid': !numbPieza.valid && numbPieza.touched}" name="numbPieza" [(ngModel)]="antojito.numbPieza" #numbPieza="ngModel" required>
+
+        </div>
+
+        <div>
+            <input class="form-control" type="text" placeholder="Ingredientes" id=" validationServer05" [ngClass]="{ 'is-invalid': !numbPrecio.valid && numbPrecio.touched}" name="numbPrecio" [(ngModel)]="antojito.numbPrecio" #numbPrecio="ngModel" required>
+
+        </div>
+
+        <div class="mt-2">
+            <select class="form-control" name="blnActivo" [(ngModel)]="antojito.blnActivo" #blnActivo="ngModel" id="validationServer06" required [ngClass]="{ 'is-invalid': !blnActivo.valid && blnActivo.touched}">
+                <option [ngValue]="true">Activo</option>
+                <option [ngValue]="false ">Inactivo</option>
+            </select>
+
+        </div>
+        <div class="list-inline mt-3 text-right">
+            <div class="list-inline-item">
+                <div class="form-group row">
+                    <div class="mr-3">
+                        <button (click)="cancelar() " type="button " class="btn btn-outline-danger btn-sm mr-2 "><i
+                                class="fa fa-times mr-2"></i>CANCELAR</button>
+                        <button [disabled]="forma.invalid" type="submit " class="btn btn-outline-info btn-sm "><i
+                                class="fa fa-save mr-2 "></i>ACTUALIZAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
