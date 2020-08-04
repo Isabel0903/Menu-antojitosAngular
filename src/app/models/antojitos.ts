@@ -3,8 +3,8 @@ export class AntojitosModel {
     strNombre: string;
     strDescripcion: string;
     strIngredientes: string;
-    numbPieza: number;
-    numbPrecio: number;
+    nmbPiezas: number;
+    nmbPrecio: number;
     blnActivo: boolean = true;
 
 }

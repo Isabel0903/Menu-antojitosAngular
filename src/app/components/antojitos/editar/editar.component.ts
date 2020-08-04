@@ -21,40 +21,38 @@ const Toast = Swal.mixin({
 export class EditarComponent implements OnInit {
 
  
-  idAntojito: string;
-  @Input() set idAntojitos(value) {
-    this.idAntojito = value;
+  idAntojitos: string;
+  @Input() set idAntojito(value) {
+    
+    this.idAntojitos = value;
     this.ngOnInit();
   };
 
   @Input() idCategorias;
   @Output() terminarActualizacion = new EventEmitter();
 
-  antojitos: any[] = [];
   antojito: AntojitosModel = new AntojitosModel();
   constructor(private antojitosService : AntojitosService) { }
 
   ngOnInit(): void {
-    if (this.idCategorias) {
-      this.antojitosService.obtenerAntojitosid(this.idCategorias).then((resp: any) => {
+      this.antojitosService.obtenerAntojitosid(this.idAntojitos).then((resp: any) => {
 
-        this.antojitos = resp.cont.antojitos;
-        this.antojito = this.antojitos.find((antojitos) => antojitos._id == this.idAntojito);
+        this.antojito = resp.cont.resp;
 
       }).catch((err) => {
-        console.log('Hay error');
+        
         console.log(err);
         Toast.fire({
           icon: 'error',
           title: err.error.msg
         });
       });
-    }
+    
   }
 
 //funcion para actualizar especialidades
 actualizarAntojitos() {
-  this.antojitosService.actualizarAntojitos(this.idCategorias, this.idAntojito, this.antojito).then((resp: any) => {
+  this.antojitosService.actualizarAntojitos(this.idCategorias, this.idAntojitos, this.antojito).then((resp: any) => {
     Toast.fire({
       icon: 'success',
       title: `¡El antojito "${this.antojito.strNombre}" fue actualizado correctamente!`

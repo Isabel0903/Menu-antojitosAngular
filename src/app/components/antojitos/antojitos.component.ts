@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AntojitosModel } from 'src/app/models/antojitos';
 import { AntojitosService } from 'src/app/services/antojitos/antojitos.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute,  } from '@angular/router';
 import { ExportDataService } from 'src/app/services/export-data/export-data.service';
 import { PdfServiceService } from '../../services/PDF/pdf-service.service';
 import Swal from 'sweetalert2';
@@ -18,8 +17,8 @@ const Toast = Swal.mixin({
   styleUrls: ['./antojitos.component.css']
 })
 export class AntojitosComponent implements OnInit {
-  actualizarAntojito: boolean = false;
-  registrarAntojito: boolean = true;
+  actualizarAntojito: boolean = true;
+  registrarAntojito: boolean = false;
   antojitos: any;
   idAntojitos: string;
   idCategorias: string;
@@ -30,33 +29,38 @@ export class AntojitosComponent implements OnInit {
   title: string;
   cargando: boolean;
   constructor(private antojitosService: AntojitosService, private router: Router,
-    private activatedRouter: ActivatedRoute, private _PdfService: PdfServiceService, private excelService: ExportDataService) { 
+    private activatedRoute: ActivatedRoute, private _PdfService: PdfServiceService, private excelService: ExportDataService) { 
 
-      this.idCategorias = activatedRouter.snapshot.params.idCategorias;
-      this.idAntojitos = activatedRouter.snapshot.params.idAntojitos;
+      this.idCategorias = this.activatedRoute.snapshot.params.id;
+      
       this.title = " Reporte de Platillos ";
       this.cargando = false;
     }
 
   ngOnInit(): void {
+    
 
-    this.obtenerAntojitos();
+          this.obtenerAntojitos();
+      
     this.arraAntojitos = [];
+    console.log(this.idAntojitos);
   }
 
 //funcion de obtener platillos
 obtenerAntojitos() {
   this.cargando = true;
-  this.antojitosService.obtenerAntojitosid(this.idCategorias)
+  this.antojitosService.obtenerPorCategoria(this.idCategorias)
     .then((antojitos: any) => {
-      this.antojitos = antojitos.cont.antojitos;
+
+      console.log(antojitos);
+      this.antojitos = antojitos.cont.resp;
     
       this.cargando = false;
 
       for (const antojito of this.antojitos) {
         let element = [
 
-          antojito.strEspecialidad.replace(/\:null/gi, ':""'),
+          antojito.strNombre.replace(/\:null/gi, ':""'),
           antojito.strDescripcion,
           antojito.strIngredientes,
           antojito.numbPieza,
@@ -65,38 +69,71 @@ obtenerAntojitos() {
 
         ];
         this.arraAntojitos.push(element);
-        this.arraNewAntojitos = this.arraAntojitos;
+        this.arraNewAntojitos=this.arraAntojitos;
+      
       }
 
     }).catch((err: any) => {
       console.log(err);
       this.cargando = false;
-      Toast.fire(err.error.msg, '', 'warning');
+      Toast.fire({
+        icon: 'error',
+        title: err.err.msg
+      });
       this.antojitos = [];
     });
 }
 
 
+desactivar(idAntojito: string) {
+  this.antojitosService.desactiva(this.idCategorias, idAntojito).then((data: any) => {
+    
+    const dataa = data.cont.resp.strNombre;
+  console.log(dataa);
+    Toast.fire({
+      icon: 'success',
+      title: `¡ se desactivo correctamente!`
+    });
+    this.obtenerAntojitos();
+  }).catch((err) => {
+    Toast.fire({
+      icon: 'error',
+      title: err.error.msg
+    });
+  });
 
+}
 
+activar(idAntojito: string) {
+  this.antojitosService.activar(this.idCategorias, idAntojito).then((data: any) => {
+    console.log(data);
+    const dataa = data.cont.resp.strNombre;
+  
+    Toast.fire({
+      icon: 'success',
+      title: `¡se activo correctamente!`
+    });
+    this.obtenerAntojitos();
+  }).catch((err) => {
+    Toast.fire({
+      icon: 'error',
+      title: err.error.msg
+    });
+  });
 
-
-
-
+}
 
 mostrarActualizar(idAntojitos: string) {
-
-  
   this.idAntojitos = idAntojitos;
-  this.actualizarAntojito = true,
-    this.registrarAntojito = false
+  this.actualizarAntojito = false,
+    this.registrarAntojito = true
 
 }
 
 terminarActualizacion(event) {
   this.ngOnInit();
-  this.actualizarAntojito = false;
-  this.registrarAntojito = true;
+  this.actualizarAntojito = true;
+  this.registrarAntojito = false;
 }
 // exportar en pdf
 exportPDF() {
@@ -165,7 +202,7 @@ exportPDF() {
   this._PdfService.generatePdf(
     "Reporte de Platillos",
     header,
-    this.arraNewAntojitos,
+    this.arraAntojitos,
     "center"
     
 

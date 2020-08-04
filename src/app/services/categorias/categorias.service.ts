@@ -10,7 +10,7 @@ export class CategoriasService {
 
   //servicio de categorias
   constructor(private http: HttpClient) { }
-  //funcion para obtener Areas
+  //funcion para obtener categorias
   obtenerCategorias() {
     return this.http.get(`${this.url}/obtener`).toPromise();
   }
@@ -24,9 +24,15 @@ export class CategoriasService {
   }
   //funcion para actualizar categorias
   actualizarCategorias(idCategorias: String, categorias: CategoriasModel) {
-    return this.http.put(`${this.url}/modificar/${idCategorias}`, categorias ).toPromise();
+    return this.http.put(`${this.url}/actualizar/${idCategorias}`, categorias ).toPromise();
   }
   
-  
+  desactivar(idCategorias: string) {
+    return this.http.delete(`${this.url}/eliminar/${idCategorias}`, {}).toPromise();
+  }
+  Activar(idCategorias: String) {
+    return this.http.delete(`${this.url}/activar/${idCategorias}`).toPromise();
+
+}
 
 }

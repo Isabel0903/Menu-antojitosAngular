@@ -20,7 +20,6 @@ const Toast = Swal.mixin({
 export class CategoriaComponent implements OnInit {
 
   actualizarCategorias: boolean = false;
-  registrarCategorias: boolean = true;
   categorias: any;
   idCategorias: string;
   searchText: string;
@@ -34,7 +33,7 @@ export class CategoriaComponent implements OnInit {
   constructor(private categoriasService: CategoriasService, private _PdfService: PdfServiceService, private excelService: ExportDataService) {
 
     this.title = "Reporte de Categorias";
-    this.cargando = false;
+    this.cargando = true;
    }
 
   ngOnInit(): void {
@@ -42,25 +41,26 @@ export class CategoriaComponent implements OnInit {
     this.arraCategorias = [];
   }
   obtenerCategorias() {
-    this.cargando = true;
+    this.cargando = false;
     this.categoriasService.obtenerCategorias().then((catego: any) => {
-      this.cargando = false;
-      this.categorias = catego.cnt;
-      console.log(this.categorias);
-  
+     
+      this.cargando = true;
+      this.categorias = catego.cont.resp;
+     
+
       for (const catego of this.categorias) {
         let element = [
-  
+
           catego.strNombre.replace(/\:null/gi, ':""'),
-          catego.strDescrpcion,
-          
-        ];
-  
+          catego.strDescripcion,
+          catego.blnActivo ? 'Si' : 'No',
+        ]
         this.arraCategorias.push(element);
-        this.arraNewCategorias = this.arraCategorias;
+        this.arraNewCategorias=this.arraCategorias;
+        
       }
     }).catch((err: any) => {
-      this.cargando = false;
+      this.cargando = true;
       Toast.fire({
         icon: 'error',
         title: err.error.msg
@@ -68,18 +68,53 @@ export class CategoriaComponent implements OnInit {
       this.categorias = [];
     });
   }
+
+
+  desactivar(id: string) {
+    this.categoriasService.desactivar(id).then((data: any) => {
+      const dataa = data.cont.resp.strNombre;
+      Toast.fire({
+        icon: 'success',
+        title: `¡Se desactivo correctamente!`
+      });
+      this.obtenerCategorias();
+    }).catch((err) => {
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+      });
+    });
+
+  }
+
+  activar(id: string) {
+    this.categoriasService.Activar(id).then((data: any) => {
+       const dataa = data.cont.resp.strNombre;
+           Toast.fire({
+        icon: 'success',
+        title: `¡Se activo correctamente!`
+      });
+      this.obtenerCategorias();
+    }).catch((err) => {
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+      });
+    });
+  }
+
+
+
   //funcion para actualizar categorias
   mostrarActualizar(idCategoria: string) {
     this.idCategorias = idCategoria;
     this.actualizarCategorias = true;
-    this.registrarCategorias = false;
   }
   
   terminarActualizacion(event) {
     this.ngOnInit();
     console.log(event);
     this.actualizarCategorias = false;
-    this.registrarCategorias = true;
   }
   
    // exportar en pdf
@@ -97,6 +132,15 @@ export class CategoriaComponent implements OnInit {
       },
       {
         text: " Descripción ",
+        alignment: "center",
+        style: "tableHeader",
+        bold: true,
+        fillColor: "#2a3e52",
+        color: "#ffffff",
+        size: 13,
+      },
+      {
+        text: "  Activado  ",
         alignment: "center",
         style: "tableHeader",
         bold: true,
@@ -128,6 +172,7 @@ export class CategoriaComponent implements OnInit {
          jsnInfo = {
            'Nombre': datos.strNombre,
            'Descripcion': datos.strDescripcion,
+           'Activado': datos.blnActivo ? 'Si' : 'No'
          };
          if (jsnInfo !== '') {
              jsnObject.push(jsnInfo);

@@ -22,6 +22,7 @@ export class EditarCategoriaComponent implements OnInit {
   idCategorias: string;
   @Input() set idCategoria( value ){
     this.idCategorias = value;
+    console.log(value);
     this.ngOnInit();
   }
   @Output() terminarActualizacion = new EventEmitter();
@@ -30,11 +31,13 @@ categoria: CategoriasModel= new CategoriasModel();
   constructor(private categoriasService: CategoriasService) { }
 
   ngOnInit(): void {
-    this.obtenerCategoria();
+    if(this.idCategorias){
+       this.obtenerCategoria();
+    }
   }
 obtenerCategoria(){
-  this.categoriasService.obtenerCategoriasid(this.idCategoria).then((resp: any) => {
-    this.categoria = resp.cnt[0];
+  this.categoriasService.obtenerCategoriasid(this.idCategorias).then((resp: any) => {
+    this.categoria = resp.cont.resp;
   }).catch((err) => {
     Toast.fire({
       icon: 'error',
@@ -43,8 +46,8 @@ obtenerCategoria(){
   });
 }
 actualizar() {
-  this.categoriasService.actualizarCategorias(this.idCategoria, this.categoria).then((resp: any) => {
-
+  this.categoriasService.actualizarCategorias(this.idCategorias, this.categoria).then((resp: any) => {
+   
     console.log(resp);
     Toast.fire({
       icon: 'success',
@@ -63,9 +66,8 @@ actualizar() {
 
 }
 
-cancelar() {
-  this.terminarActualizacion.emit();
-
-}
+  cancelar() {
+    this.terminarActualizacion.emit();
+  }
 
 }

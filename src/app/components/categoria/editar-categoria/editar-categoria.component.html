@@ -5,26 +5,28 @@
 <form (ngSubmit)="actualizar()" class="animated fadeIn fast" #forma="ngForm">
     <div class="form-group col-md-12">
         <div>
-            <input class="form-control" type="text" placeholder="Nombre del Categoria" id=" validationServer01" [ngClass]="{ 'is-invalid': !strNombre.valid && strNombre.touched}" name="strnombre" [(ngModel)]="categoria.strNombre" #strNombre="ngModel" required>
-            <div class="invalid-feedback">
-                El nombre es necesario.
-            </div>
+            <input class="form-control" type="text" placeholder="Nombre del Categoria" id=" validationServer01" [ngClass]="{ 'is-invalid': !strNombre.valid && strNombre.touched}" name="strNombre" [(ngModel)]="categoria.strNombre" #strNombre="ngModel" required>
+
         </div>
-        <!-- <div>
-
-            <textarea name="comentarios" rows="10" cols="40" id=" validationServer02" [ngClass]="{ 'is-invalid': !strDescripcion.valid && strDescripcion.touched}" name="strDescripcion" [(ngModel)]="categoria.strDescripcion" #strDescripcion="ngModel" required>Escribe aquí tus comentarios</textarea>
-            <div class="invalid-feedback">
-                La descripción es necesaria.
-            </div>
-        </div> -->
-
-
+        <div>
+            <br>
+            <input class="form-control" type="text" placeholder="Descripción" id=" validationServer02" [ngClass]="{ 'is-invalid': !strDescripcion.valid && strDescripcion.touched}" name="strDescripcion" [(ngModel)]="categoria.strDescripcion" #strDescripcion="ngModel"
+                required>
+        </div>
+        <br>
+        <div class="mt-2">
+            <select class="form-control" name="blnActivo" [(ngModel)]="categoria.blnActivo" #blnActivo="ngModel" id="validationServer03" required [ngClass]="{ 'is-invalid': !blnActivo.valid && blnActivo.touched}">
+                <option [ngValue]="undefined" hidden>Elige</option>    
+                <option [ngValue]="true">Activo</option>
+                <option [ngValue]="false ">Inactivo</option>
+            </select>
+        </div>
         <div class="list-inline mt-3 text-right">
             <div class="list-inline-item">
                 <div class="form-group row">
                     <div class="mr-3">
-                        <button (click)="cancelar() " type="button " class="btn btn-outline-danger btn-sm mr-2 "><i class="fa fa-times mr-2"></i>CANCELAR</button>
-                        <button [disabled]="forma.invalid" type="submit " class="btn btn-outline-info btn-sm "><i class="fa fa-save mr-2 "></i>ACTUALIZAR</button>
+                        <button (click)="cancelar()" type="button" class="btn btn-danger"><i class="fa fa-times mr-2"></i>CANCELAR</button>
+                        <button [disabled]="forma.invalid" type="submit" class="btn btn-success"><i class="fa fa-save mr-2 "></i>ACTUALIZAR</button>
                     </div>
                 </div>
             </div>

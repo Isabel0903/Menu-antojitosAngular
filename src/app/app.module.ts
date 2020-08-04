@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CategoriaComponent } from './components/categoria/categoria.component';
@@ -11,6 +10,9 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RegistrarCategoriaComponent } from './components/categoria/registrar-categoria/registrar-categoria.component';
 import { EditarCategoriaComponent } from './components/categoria/editar-categoria/editar-categoria.component';
+import { HttpClientModule } from '@angular/common/http';
+import { Ng2SearchPipeModule } from "ng2-search-filter";
+
 
 
 
@@ -23,22 +25,17 @@ import { EditarCategoriaComponent } from './components/categoria/editar-categori
     EditarComponent,
     RegistrarCategoriaComponent,
     EditarCategoriaComponent
-    
-   
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    // SharedModule,
     FormsModule,
     CommonModule,
-    // NgxPaginationModule,
-    // Ng2SearchPipeModule,
-    // PAGES_ROUTES,
-    FormsModule,
-    CommonModule
+    HttpClientModule,
+    Ng2SearchPipeModule
   ],
-  providers: [],
+  providers: [HttpClientModule],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

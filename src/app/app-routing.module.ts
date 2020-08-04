@@ -6,7 +6,8 @@ import { CategoriaComponent } from './components/categoria/categoria.component';
 
 const routes: Routes = [
   {path: 'categoria', component: CategoriaComponent, data: { titulo : 'Categoria'}},
-  {path: 'antojitos', component: AntojitosComponent, data: { titulo: 'Antojitos'}},
+  {path: 'antojito/:id', component: AntojitosComponent, data: { titulo: 'Antojitos'}},
+  { path: '', redirectTo: '/categoria', pathMatch: 'full' },
 ];
 
 @NgModule({
