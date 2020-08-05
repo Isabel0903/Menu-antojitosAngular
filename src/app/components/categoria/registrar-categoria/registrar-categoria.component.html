@@ -8,11 +8,9 @@
             <input class="form-control" type="text" placeholder="Nombre del Categoria" id=" validationServer01" [ngClass]="{ 'is-invalid': !strNombre.valid && strNombre.touched}" name="strnombre" [(ngModel)]="categorias.strNombre" #strNombre="ngModel" required>
 
         </div>
-        <div>
-            <br>
-            <input class="form-control" type="text" placeholder="Descripción" id=" validationServer02" [ngClass]="{ 'is-invalid': !strDescripcion.valid && strDescripcion.touched}" name="strDescripcion" [(ngModel)]="categorias.strDescripcion" #strDescripcion="ngModel"
-                required>
-
+        <br>
+        <div class="form-group">
+            <textarea class="form-control" [(ngModel)]="categorias.strDescripcion" #strDescripcion="ngModel" name="strDescripcion" id="strDescripcion" class="form-control" id="Nombre" rows="3" placeholder="Descripción"></textarea>
         </div>
         <br>
         <div class="mt-2">

@@ -8,12 +8,10 @@
             <input class="form-control" type="text" placeholder="Nombre del platillo" id=" validationServer01" [ngClass]="{ 'is-invalid': !strNombre.valid && strNombre.touched}" name="strNombre" [(ngModel)]="antojito.strNombre" #strNombre="ngModel" required>
         </div>
         <br>
-        <div>
-            <input class="form-control" type="text" placeholder="Descripcion" id=" validationServer02" [ngClass]="{ 'is-invalid': !strDescripcion.valid && strDescripcion.touched}" name="strDescripcion" [(ngModel)]="antojito.strDescripcion" #strDescripcion="ngModel"
-                required>
-
+        <div class="form-group">
+            <textarea class="form-control" [(ngModel)]="antojito.strDescripcion" #strDescripcion="ngModel" name="strDescripcion" id="strDescripcion" class="form-control" id="Nombre" rows="3" placeholder="Descripción"></textarea>
         </div>
-        <br>
+
         <div>
             <input class="form-control" type="text" placeholder="Ingredientes" id=" validationServer03" [ngClass]="{ 'is-invalid': !strIngredientes.valid && strIngredientes.touched}" name="strIngredientes" [(ngModel)]="antojito.strIngredientes" #strIngredientes="ngModel"
                 required>
@@ -41,10 +39,8 @@
             <div class="list-inline-item">
                 <div class="form-group row">
                     <div class="mr-3">
-                        <button (click)="cancelar() " type="button " class="btn btn-outline-danger btn-sm mr-2 "><i
-                            class="btn btn-danger"></i>CANCELAR</button>
-                        <button [disabled]="forma.invalid" type="submit " class="btn btn-outline-info btn-sm "><i
-                            class="btn btn-success"></i>ACTUALIZAR</button>
+                        <button (click)="cancelar() " type="button " class="btn btn-danger "><i class="fa fa-save mr-2 "></i>CANCELAR</button>
+                        <button [disabled]="forma.invalid" type="submit " class="btn btn-success"><i class="fa fa-save mr-2 "></i>ACTUALIZAR</button>
                     </div>
                 </div>
             </div>
