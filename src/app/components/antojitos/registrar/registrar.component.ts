@@ -23,7 +23,7 @@ export class RegistrarComponent implements OnInit {
 
   @Input() componentes;
   @Input() idAntojitos;
-  @Input() idCategoria: string;
+  @Input() idCategorias: string;
   @Output() salida = new EventEmitter();
   @Output() terminarActualizacion = new EventEmitter();
 
@@ -33,12 +33,13 @@ export class RegistrarComponent implements OnInit {
   constructor(private antojitoService : AntojitosService) { }
 
   ngOnInit(): void {
+    console.log(this.idCategorias,'Hijo');
   }
  //funcion para registrar Antojitos
  registrarAntojito(forma: NgForm) {
-   console.log(this.idCategoria);
+   console.log(this.idCategorias);
   console.log(forma.value)
-  this.antojitoService.registrarAntojitos(this.idCategoria, this.antojito).then((resp: any) => {
+  this.antojitoService.registrarAntojitos(this.idCategorias, this.antojito).then((resp: any) => {
     
     
     this.terminarActualizacion.emit();

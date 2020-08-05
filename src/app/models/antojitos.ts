@@ -4,6 +4,7 @@ export class AntojitosModel {
     strDescripcion: string;
     strIngredientes: string;
     nmbPiezas: number;
+    idCategoria?:string;
     nmbPrecio: number;
     blnActivo: boolean = true;
 

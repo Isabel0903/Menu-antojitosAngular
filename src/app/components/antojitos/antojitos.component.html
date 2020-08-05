@@ -7,7 +7,7 @@
                     </app-editar>
                 </div>
                 <div class="container mt-4" *ngIf="actualizarAntojito">
-                    <app-registrar [idAntojitos]="idAntojitos" [idCategoria]="idCategorias" (terminarActualizacion)="terminarActualizacion($event)">
+                    <app-registrar [idAntojitos]="idAntojitos" [idCategorias]="idCategorias" (terminarActualizacion)="terminarActualizacion($event)">
                     </app-registrar>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                             <div class="row fadeIn">
                                 <div class="col-12">
                                     <div class="table-wrapper-scroll-y my-custom-scrollbar table-responsive">
-                                        <table id="tab1" class="table table-sm table-hover table-borderless">
+                                        <table id="tab1" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th scope="col" class="text-center">NOMBRE</th>
@@ -55,7 +55,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let antojito of antojitos ">
+                                                <tr *ngFor="let antojito of antojitos |filter:searchText">
                                                     <td class="text-center">{{antojito.strNombre}}</td>
                                                     <td class="text-center">{{antojito.strDescripcion}}</td>
                                                     <td class="text-center">{{antojito.strIngredientes}}</td>

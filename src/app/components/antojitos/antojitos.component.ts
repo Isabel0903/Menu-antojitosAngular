@@ -21,7 +21,7 @@ export class AntojitosComponent implements OnInit {
   registrarAntojito: boolean = false;
   antojitos: any;
   idAntojitos: string;
-  idCategorias: string;
+  @Input() idCategorias: string;
   searchText: string;
   pageActual: number = 1;
   arraAntojitos = [];
@@ -32,16 +32,15 @@ export class AntojitosComponent implements OnInit {
     private activatedRoute: ActivatedRoute, private _PdfService: PdfServiceService, private excelService: ExportDataService) { 
 
       this.idCategorias = this.activatedRoute.snapshot.params.id;
+console.log('PADRE',this.idCategorias);
       
       this.title = " Reporte de Platillos ";
       this.cargando = false;
     }
 
   ngOnInit(): void {
-    
 
-          this.obtenerAntojitos();
-      
+    this.obtenerAntojitos();
     this.arraAntojitos = [];
     console.log(this.idAntojitos);
   }
@@ -63,8 +62,8 @@ obtenerAntojitos() {
           antojito.strNombre.replace(/\:null/gi, ':""'),
           antojito.strDescripcion,
           antojito.strIngredientes,
-          antojito.numbPieza,
-          antojito.numbPrecio,
+          antojito.nmbPiezas,
+          antojito.nmbPrecio,
           antojito.blnActivo ? 'Sí' : 'No',
 
         ];
@@ -202,7 +201,7 @@ exportPDF() {
   this._PdfService.generatePdf(
     "Reporte de Platillos",
     header,
-    this.arraAntojitos,
+    this.arraNewAntojitos,
     "center"
     
 
